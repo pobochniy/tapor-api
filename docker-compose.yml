@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+
+  database:
+    image: mysql:8.0.31
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: tapordb
+      MYSQL_USER: app
+      MYSQL_PASSWORD: 12345
+    ports:
+      - 3309:3306
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8089:8080
