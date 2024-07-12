@@ -33,7 +33,15 @@ public class IssueController: ControllerBase
     [HttpPost]
     public IActionResult Create([FromBody]IssueDto dto)
     {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        // создаем подключение к базе
+        
+        // формируем запрос
+        
+        // сохраняем в базу, получаем ай созданной записи
         var res = (long) 5;
+        
+        // возвращаем на клиент
         return Ok(res);
     }
     
