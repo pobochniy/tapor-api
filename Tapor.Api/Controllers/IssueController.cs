@@ -42,7 +42,10 @@ public class IssueController: ControllerBase
 
         // отправляем уведомления
         var notificationService = new NotificationService();
-        notificationService.IssueNotify(dto.Reporter, false, issueId);
+        if (dto.Reporter.HasValue)
+        {
+            notificationService.IssueNotify(dto.Reporter.Value, false, issueId);
+        }
         if (dto.Assignee.HasValue)
         {
             notificationService.IssueNotify(dto.Assignee.Value, true, issueId);

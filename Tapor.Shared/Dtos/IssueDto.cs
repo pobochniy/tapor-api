@@ -21,7 +21,7 @@ public class IssueDto
     /// Инициатор
     /// </summary>
     [Required]
-    public Guid Reporter { get; set; }
+    public Guid? Reporter { get; set; }
     
     /// <summary>
     /// Сводка
