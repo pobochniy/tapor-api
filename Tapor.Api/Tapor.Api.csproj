@@ -17,6 +17,7 @@
     
     <ItemGroup>
       <ProjectReference Include="..\Tapor.DB\Tapor.DB.csproj" />
+      <ProjectReference Include="..\Tapor.Services\Tapor.Services.csproj" />
       <ProjectReference Include="..\Tapor.Shared\Tapor.Shared.csproj" />
     </ItemGroup>
     

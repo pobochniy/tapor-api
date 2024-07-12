@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Tapor.DB;
+using Tapor.Services;
 using Tapor.Shared.Dtos;
 
 namespace Tapor.Api.Controllers;
@@ -37,10 +38,18 @@ public class IssueController: ControllerBase
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         var repository = new IssueRepository();
-        var res = repository.Create(dto);
+        var issueId = repository.Create(dto);
+
+        // отправляем уведомления
+        var notificationService = new NotificationService();
+        notificationService.IssueNotify(dto.Reporter, false, issueId);
+        if (dto.Assignee.HasValue)
+        {
+            notificationService.IssueNotify(dto.Assignee.Value, true, issueId);
+        }
         
         // возвращаем на клиент
-        return Ok(res);
+        return Ok(issueId);
     }
     
     /// <summary>

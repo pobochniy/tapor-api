@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tapor.DB", "Tapor.DB\Tapor.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tapor.Shared", "Tapor.Shared\Tapor.Shared.csproj", "{7D559916-27AA-43F4-903A-F89F286F6572}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tapor.Services", "Tapor.Services\Tapor.Services.csproj", "{08DB4A11-5D76-42E4-99D2-F6D7A259C250}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{7D559916-27AA-43F4-903A-F89F286F6572}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D559916-27AA-43F4-903A-F89F286F6572}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D559916-27AA-43F4-903A-F89F286F6572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08DB4A11-5D76-42E4-99D2-F6D7A259C250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08DB4A11-5D76-42E4-99D2-F6D7A259C250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08DB4A11-5D76-42E4-99D2-F6D7A259C250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08DB4A11-5D76-42E4-99D2-F6D7A259C250}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
