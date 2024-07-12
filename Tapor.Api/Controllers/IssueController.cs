@@ -46,7 +46,8 @@ public class IssueController: ControllerBase
 
         // var currentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         var currentUserId = Guid.NewGuid();
-        var service = new IssueService(_logger);
+        var repo = new IssueRepository(_logger);
+        var service = new IssueService(repo);
         var issueId = service.Create(dto, currentUserId);
         
         // возвращаем на клиент

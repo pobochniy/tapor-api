@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
+using Tapor.Shared;
 using Tapor.Shared.Dtos;
 
 namespace Tapor.DB;
 
-public class IssueRepository
+public class IssueRepository: IIssueRepository
 {
     private readonly ILogger _logger;
 
