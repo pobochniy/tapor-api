@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Tapor.DB;
 using Tapor.Services;
@@ -37,19 +38,10 @@ public class IssueController: ControllerBase
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        var repository = new IssueRepository();
-        var issueId = repository.Create(dto);
-
-        // отправляем уведомления
-        var notificationService = new NotificationService();
-        if (dto.Reporter.HasValue)
-        {
-            notificationService.IssueNotify(dto.Reporter.Value, false, issueId);
-        }
-        if (dto.Assignee.HasValue)
-        {
-            notificationService.IssueNotify(dto.Assignee.Value, true, issueId);
-        }
+        // var currentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        var currentUserId = Guid.NewGuid();
+        var service = new IssueService();
+        var issueId = service.Create(dto, currentUserId);
         
         // возвращаем на клиент
         return Ok(issueId);
