@@ -13,6 +13,12 @@ namespace Tapor.Api.Controllers;
 [ApiController]
 public class IssueController: ControllerBase
 {
+    private readonly ILogger _logger;
+
+    public IssueController(ILogger logger)
+    {
+        _logger = logger;
+    }
     /// <summary>
     /// Создание хотелки
     /// </summary>
@@ -40,7 +46,7 @@ public class IssueController: ControllerBase
 
         // var currentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         var currentUserId = Guid.NewGuid();
-        var service = new IssueService();
+        var service = new IssueService(_logger);
         var issueId = service.Create(dto, currentUserId);
         
         // возвращаем на клиент

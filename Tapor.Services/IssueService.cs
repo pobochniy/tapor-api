@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Tapor.DB;
 using Tapor.Shared.Dtos;
 
@@ -5,9 +6,16 @@ namespace Tapor.Services;
 
 public class IssueService
 {
+    private readonly ILogger _logger;
+
+    public IssueService(ILogger logger)
+    {
+        _logger = logger;
+    }
+    
     public long Create(IssueDto dto, Guid currentUserId)
     {
-        var repository = new IssueRepository();
+        var repository = new IssueRepository(_logger);
         var issueId = repository.Create(dto);
 
         // отправляем уведомления
