@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Tapor.Api.Dto;
+using Tapor.DB;
+using Tapor.Shared.Dtos;
 
 namespace Tapor.Api.Controllers;
 
@@ -34,12 +35,9 @@ public class IssueController: ControllerBase
     public IActionResult Create([FromBody]IssueDto dto)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
-        // создаем подключение к базе
-        
-        // формируем запрос
-        
-        // сохраняем в базу, получаем ай созданной записи
-        var res = (long) 5;
+
+        var repository = new IssueRepository();
+        var res = repository.Create(dto);
         
         // возвращаем на клиент
         return Ok(res);
