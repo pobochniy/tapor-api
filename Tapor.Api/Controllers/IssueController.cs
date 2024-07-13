@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Tapor.Api.Dto;
+using Tapor.Api.Dtos;
 
 namespace Tapor.Api.Controllers;
 
