@@ -48,7 +48,17 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddServices();
 
+var serviceCollection = builder.Services.ToList();
+var doubledServices = serviceCollection
+    .Select(x => x.ServiceType)
+    .ToArray()
+    .GroupBy(g =>  g)
+    .Where(g => g.Count() > 1)
+    .Where(x=>!x.Key.FullName.Contains("Microsoft"))
+    .ToList();
+
 var app = builder.Build();
+
 // app.UseStaticFiles();
 app.MapHealthChecks("healthz");
 app.UseSwagger();
