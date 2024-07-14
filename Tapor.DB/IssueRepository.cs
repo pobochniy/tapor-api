@@ -6,9 +6,9 @@ namespace Tapor.DB;
 
 public class IssueRepository: IIssueRepository
 {
-    private readonly ILogger _logger;
+    private readonly ILogger<IssueRepository> _logger;
 
-    public IssueRepository(ILogger logger)
+    public IssueRepository(ILogger<IssueRepository> logger)
     {
         _logger = logger;
     }

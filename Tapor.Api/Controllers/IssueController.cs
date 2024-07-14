@@ -14,12 +14,13 @@ namespace Tapor.Api.Controllers;
 [ApiController]
 public class IssueController: ControllerBase
 {
-    private readonly ILogger _logger;
+    private readonly IssueService _service;
 
-    public IssueController(ILogger<IssueController> logger)
+    public IssueController(IssueService service)
     {
-        _logger = logger;
+        _service = service;
     }
+    
     /// <summary>
     /// Создание хотелки
     /// </summary>
@@ -46,11 +47,8 @@ public class IssueController: ControllerBase
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        // var currentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-        var currentUserId = Guid.NewGuid();
-        var repo = new IssueRepository(_logger);
-        var service = new IssueService(repo);
-        var issueId = service.Create(dto, currentUserId);
+        var currentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        var issueId = _service.Create(dto, currentUserId);
         
         // возвращаем на клиент
         return Ok(issueId);
@@ -66,18 +64,9 @@ public class IssueController: ControllerBase
     [Produces("application/json")]
     public IActionResult Details([FromQuery]long id)
     {
-        if (id != 5) return NotFound();
+        var res = _service.Details(id);
+        if (res == null) return NotFound();
         
-        var res = new IssueDto
-        {
-            Id = 5,
-            Reporter = Guid.Empty,
-            Status = 1,
-            Summary = "Почистить кофе машину",
-            Description = "Очень нужная и серьезная задача, необходимо почистить кофе машину",
-            DueDate = DateTime.Now,
-            EstimatedTime = 1.5m
-        };
         return Ok(res);
     }
 

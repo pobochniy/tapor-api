@@ -4,6 +4,13 @@ namespace Tapor.Services;
 
 public class NotificationService
 {
+    private readonly NotificationsRepository _repository;
+
+    public NotificationService(NotificationsRepository repository)
+    {
+        _repository = repository;
+    }
+    
     public void IssueNotify(Guid userId, bool isAssignee, long issueId)
     {
         // фомируем текст письма для исполнителя или ответственного
@@ -16,7 +23,6 @@ public class NotificationService
         var email = profileRepository.GetEmail(userId);
         
         // сохраняем письмо в базу
-        var notificationRepository = new NotificationsRepository();
-        notificationRepository.Save(email, text);
+        _repository.Save(email, text);
     }
 }
