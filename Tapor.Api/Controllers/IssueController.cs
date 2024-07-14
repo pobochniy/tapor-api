@@ -1,5 +1,8 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using Tapor.Api.Dtos;
+using Tapor.DB;
+using Tapor.Services;
+using Tapor.Shared.Dtos;
 
 namespace Tapor.Api.Controllers;
 
@@ -10,6 +13,12 @@ namespace Tapor.Api.Controllers;
 [ApiController]
 public class IssueController: ControllerBase
 {
+    private readonly ILogger _logger;
+
+    public IssueController(ILogger logger)
+    {
+        _logger = logger;
+    }
     /// <summary>
     /// Создание хотелки
     /// </summary>
@@ -33,8 +42,16 @@ public class IssueController: ControllerBase
     [HttpPost]
     public IActionResult Create([FromBody]IssueDto dto)
     {
-        var res = (long) 5;
-        return Ok(res);
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        // var currentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        var currentUserId = Guid.NewGuid();
+        var repo = new IssueRepository(_logger);
+        var service = new IssueService(repo);
+        var issueId = service.Create(dto, currentUserId);
+        
+        // возвращаем на клиент
+        return Ok(issueId);
     }
     
     /// <summary>

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Tapor.Api.Dtos;
+namespace Tapor.Shared.Dtos;
 
 /// <summary>
 /// Хотелка заказчика
@@ -21,7 +21,7 @@ public class IssueDto
     /// Инициатор
     /// </summary>
     [Required]
-    public Guid Reporter { get; set; }
+    public Guid? Reporter { get; set; }
     
     /// <summary>
     /// Сводка
