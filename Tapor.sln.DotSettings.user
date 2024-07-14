@@ -1,6 +1,12 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4b0e2132_002D8731_002D4a0c_002Dbc35_002D3d068d1a9916/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="WhenReporterIsEmpty_ShouldTakeCurrentUser" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4b0e2132_002D8731_002D4a0c_002Dbc35_002D3d068d1a9916/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="WhenReporterIsEmpty_ShouldTakeCurrentUser" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;NUnit3x::BAC21CAF-26BE-44EF-8EED-C0283B168AC8::net6.0::Tapor.Services.Tests.Tests.WhenReporterIsEmpty_ShouldTakeCurrentUser&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::BAC21CAF-26BE-44EF-8EED-C0283B168AC8::net8.0::Tapor.Services.Tests.DependencyInjection.VerifyControllers&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7921399d_002D4fa2_002D4db7_002D8421_002D634c4b8bf40b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="VerifyControllers" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;NUnit3x::BAC21CAF-26BE-44EF-8EED-C0283B168AC8::net8.0::Tapor.Services.Tests.DependencyInjection.VerifyControllers&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::BAC21CAF-26BE-44EF-8EED-C0283B168AC8::net8.0::Tapor.Services.Tests.DependencyInjection.CanResolveApplication&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
