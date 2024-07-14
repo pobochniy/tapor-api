@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tapor.DB;
 using Tapor.Services;
@@ -15,7 +16,7 @@ public class IssueController: ControllerBase
 {
     private readonly ILogger _logger;
 
-    public IssueController(ILogger logger)
+    public IssueController(ILogger<IssueController> logger)
     {
         _logger = logger;
     }
@@ -40,6 +41,7 @@ public class IssueController: ControllerBase
     /// <param name="dto">модель issue</param>
     /// <returns>идентификатор созданного пожелания</returns>
     [HttpPost]
+    [Authorize]
     public IActionResult Create([FromBody]IssueDto dto)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);

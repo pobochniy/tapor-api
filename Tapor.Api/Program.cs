@@ -1,7 +1,23 @@
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+    {
+        o.Cookie.HttpOnly = true;
+        o.Events = new CookieAuthenticationEvents
+        {
+            OnRedirectToLogin = redirectContext =>
+            {
+                redirectContext.HttpContext.Response.StatusCode = 401;
+                return Task.CompletedTask;
+            }
+        };
+    });
 
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks();
@@ -39,6 +55,9 @@ app.UseSwaggerUI(options =>
     // options.RoutePrefix = string.Empty;
     // options.InjectStylesheet("swagger-ui/custom.css");
 });
+
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
