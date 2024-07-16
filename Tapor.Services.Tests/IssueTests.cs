@@ -11,7 +11,7 @@ public class Tests
     {
         // Arrange
         var repository = new IssueTestRepository();
-        var notificationService = new NotificationService(new NotificationsRepository());
+        var notificationService = new NotificationService(new NotificationsRepository(new MySingleton(1)));
         var service = new IssueService(repository, notificationService);
         var model = new IssueDto();
         var currentUser = Guid.NewGuid();

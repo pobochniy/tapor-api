@@ -14,6 +14,9 @@ public static class ConfigureServices
             .AddTransient<IIssueRepository, IssueRepository>()
             .AddTransient<NotificationService>()
             .AddTransient<NotificationsRepository>();
+
+        serviceCollection.AddSingleton(new MySingleton(1));
+        serviceCollection.AddSingleton(new MySingleton(2));
         
         return serviceCollection;
     }
