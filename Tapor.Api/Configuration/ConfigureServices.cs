@@ -15,6 +15,8 @@ public static class ConfigureServices
             .AddSingleton<NotificationService>()
             .AddSingleton<NotificationsRepository>();
 
+        serviceCollection.AddScoped<SystemUser>();
+
         serviceCollection.AddSingleton(new MySingleton(1));
         serviceCollection.AddSingleton(new MySingleton(2));
         
