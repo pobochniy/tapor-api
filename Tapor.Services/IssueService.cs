@@ -7,22 +7,19 @@ public class IssueService
 {
     private readonly IIssueRepository _repository;
     private readonly NotificationService _notificationService;
-    private readonly SystemUser _user;
 
     public IssueService(IIssueRepository repository, 
-        NotificationService notificationService,
-        SystemUser user)
+        NotificationService notificationService)
     {
         _repository = repository;
         _notificationService = notificationService;
-        _user = user;
     }
     
-    public long Create(IssueDto dto)
+    public long Create(IssueDto dto, Guid currentUserId)
     {
         if (!dto.Reporter.HasValue)
         {
-            dto.Reporter = _user._userId;
+            dto.Reporter = currentUserId;
         }
         var issueId = _repository.Create(dto);
 
