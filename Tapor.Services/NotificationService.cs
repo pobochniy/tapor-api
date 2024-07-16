@@ -4,11 +4,21 @@ namespace Tapor.Services;
 
 public class NotificationService
 {
+    // User
+    
+    // Template
+    
+    
     private readonly NotificationsRepository _repository;
 
     public NotificationService(NotificationsRepository repository)
     {
         _repository = repository;
+    }
+
+    public void CreateNotification() // User, Template
+    {
+        
     }
     
     public void IssueNotify(Guid userId, bool isAssignee, long issueId)

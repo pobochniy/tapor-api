@@ -16,6 +16,9 @@ public static class ConfigureServices
             .AddSingleton<NotificationService>()
             .AddSingleton<NotificationsRepository>();
 
+        serviceCollection.AddSingleton<IMySingleton>(new MySingleton(1));
+        serviceCollection.AddSingleton(new MySingleton(2));
+        
         return serviceCollection;
     }
 }

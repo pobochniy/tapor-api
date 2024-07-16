@@ -1,14 +1,14 @@
-using Microsoft.Extensions.Logging;
+using Tapor.Shared;
 
 namespace Tapor.DB;
 
 public class NotificationsRepository
 {
-    private readonly ILogger<NotificationsRepository> _logger;
+    private readonly MySingleton _singleton;
 
-    public NotificationsRepository(ILogger<NotificationsRepository> logger)
+    public NotificationsRepository(MySingleton singleton)
     {
-        _logger = logger;
+        _singleton = singleton;
     }
     
     public void Save(string email, string text)
@@ -18,7 +18,5 @@ public class NotificationsRepository
         // формируем запрос
         
         // сохраняем в базу
-        
-        _logger.LogInformation("Notification saved");
     }
 }
