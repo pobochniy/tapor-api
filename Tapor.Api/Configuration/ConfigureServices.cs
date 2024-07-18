@@ -9,11 +9,12 @@ public static class ConfigureServices
     public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddTransient<AuthService>()
-            .AddTransient<IssueService>()
-            .AddTransient<IIssueRepository, IssueRepository>()
-            .AddTransient<NotificationService>()
-            .AddTransient<NotificationsRepository>();
+            .AddSingleton<AuthService>()
+            .AddSingleton<IssueService>()
+            .AddSingleton<IIssueRepository, IssueRepository>()
+            .AddSingleton<IssueRepository>()
+            .AddSingleton<NotificationService>()
+            .AddSingleton<NotificationsRepository>();
 
         return serviceCollection;
     }
