@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Logging;
 using Tapor.DB;
 using Tapor.Shared;
 using Tapor.Shared.Dtos;
@@ -12,7 +11,8 @@ public class Tests
     {
         // Arrange
         var repository = new IssueTestRepository();
-        var service = new IssueService(repository);
+        var notificationService = new NotificationService(new NotificationsRepository());
+        var service = new IssueService(repository, notificationService);
         var model = new IssueDto();
         var currentUser = Guid.NewGuid();
         

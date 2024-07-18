@@ -13,9 +13,9 @@ public class AuthController: ControllerBase
 {
     private readonly AuthService _service;
 
-    public AuthController()
+    public AuthController(AuthService service)
     {
-        _service = new AuthService();
+        _service = service;
     }
 
     [HttpPost]

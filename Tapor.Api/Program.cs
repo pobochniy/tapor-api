@@ -1,6 +1,10 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
+using Tapor.Api.Configuration;
+using Tapor.DB;
+using Tapor.Services;
+using Tapor.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +48,8 @@ builder.Services.AddSwaggerGen(options =>
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
+
+builder.Services.AddServices();
 
 var app = builder.Build();
 // app.UseStaticFiles();
