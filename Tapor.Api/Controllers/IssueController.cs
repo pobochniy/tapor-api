@@ -24,21 +24,6 @@ public class IssueController: ControllerBase
     /// <summary>
     /// Создание хотелки
     /// </summary>
-    /// <remarks>
-    /// {
-    /// "id": 0,
-    /// "assignee": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    /// "reporter": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    /// "summary": "супер задача",
-    /// "description": "большое описание",
-    /// "type": 1,
-    /// "status": 2,
-    /// "priority": 3,
-    /// "size": 4,
-    /// "estimatedTime": 0,
-    /// "dueDate": "2023-01-29T15:47:00.645Z"
-    /// }
-    /// </remarks>
     /// <param name="dto">модель issue</param>
     /// <returns>идентификатор созданного пожелания</returns>
     [HttpPost]
