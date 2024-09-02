@@ -15,10 +15,12 @@ namespace Tapor.Api.Controllers;
 public class IssueController: ControllerBase
 {
     private readonly IssueService _service;
+    private readonly SystemUser _user;
 
-    public IssueController(IssueService service)
+    public IssueController(IssueService service, SystemUser user)
     {
         _service = service;
+        _user = user;
     }
     
     /// <summary>
@@ -47,8 +49,9 @@ public class IssueController: ControllerBase
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        var currentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-        var issueId = _service.Create(dto, currentUserId);
+        _user.SetUserId(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value));
+        // var currentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        var issueId = _service.Create(dto);
         
         // возвращаем на клиент
         return Ok(issueId);

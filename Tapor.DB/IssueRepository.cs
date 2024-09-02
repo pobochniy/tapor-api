@@ -20,7 +20,7 @@ public class IssueRepository: IIssueRepository
         // формируем запрос
         
         // сохраняем в базу, получаем ай созданной записи
-        var issueId = (long) 5;
+        var issueId = (long) Random.Shared.Next();
         
         // добавить в логгер запись
         _logger.LogInformation("Issue {IssueId} created", issueId);
