@@ -4,7 +4,7 @@ namespace Tapor.DB;
 
 public class NotificationsRepository
 {
-    public NotificationsRepository(MySingleton singleton)
+    public NotificationsRepository()
     {
         
     }

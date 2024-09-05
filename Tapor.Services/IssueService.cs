@@ -15,13 +15,13 @@ public class IssueService
         _notificationService = notificationService;
     }
     
-    public long Create(IssueDto dto, Guid currentUserId)
+    public async Task<long> Create(IssueDto dto, Guid currentUserId, CancellationToken ct)
     {
         if (!dto.Reporter.HasValue)
         {
             dto.Reporter = currentUserId;
         }
-        var issueId = _repository.Create(dto);
+        var issueId = await _repository.Create(dto, ct);
 
         // отправляем уведомления
         _notificationService.IssueNotify(dto.Reporter.Value, false, issueId);
@@ -32,6 +32,11 @@ public class IssueService
         }
 
         return issueId;
+    }
+
+    public IAsyncEnumerable<IssueDto> GetList(CancellationToken ct)
+    {
+        return _repository.GetList(ct);
     }
 
     public IssueDto? Details(long id)

@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Tapor.DB;
 using Tapor.Shared;
 using Tapor.Shared.Dtos;
@@ -7,17 +8,17 @@ namespace Tapor.Services.Tests;
 public class Tests
 {
     [Test]
-    public void WhenReporterIsEmpty_ShouldTakeCurrentUser()
+    public async Task WhenReporterIsEmpty_ShouldTakeCurrentUser()
     {
         // Arrange
         var repository = new IssueTestRepository();
-        var notificationService = new NotificationService(new NotificationsRepository(new MySingleton(1)));
+        var notificationService = new NotificationService(new NotificationsRepository());
         var service = new IssueService(repository, notificationService);
         var model = new IssueDto();
         var currentUser = Guid.NewGuid();
         
         // Act
-        var issueId = service.Create(model, currentUser);
+        var issueId = await service.Create(model, currentUser, default);
         
         // Assert
         var issue = repository.GetIssue(issueId);
@@ -26,13 +27,21 @@ public class Tests
 
     private class IssueTestRepository: IIssueRepository
     {
-        private List<IssueDto> _repo = new List<IssueDto>();
+        private readonly List<IssueDto> _repo = new();
         
-        public long Create(IssueDto dto)
+        public Task<long> Create(IssueDto dto, CancellationToken ct = default)
         {
             dto.Id = Random.Shared.Next();
             _repo.Add(dto);
-            return (long)dto.Id;
+            return Task.FromResult((long)dto.Id);
+        }
+
+        public async IAsyncEnumerable<IssueDto> GetList([EnumeratorCancellation] CancellationToken ct)
+        {
+            foreach (var dto in _repo)
+            {
+                yield return dto;
+            }
         }
 
         public IssueDto GetIssue(long id)

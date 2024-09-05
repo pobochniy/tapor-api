@@ -4,5 +4,6 @@ namespace Tapor.Shared;
 
 public interface IIssueRepository
 {
-    long Create(IssueDto dto);
+    Task<long> Create(IssueDto dto, CancellationToken ct);
+    IAsyncEnumerable<IssueDto> GetList(CancellationToken ct);
 }

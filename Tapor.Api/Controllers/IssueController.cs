@@ -28,15 +28,26 @@ public class IssueController: ControllerBase
     /// <returns>идентификатор созданного пожелания</returns>
     [HttpPost]
     [Authorize]
-    public IActionResult Create([FromBody]IssueDto dto)
+    public IActionResult Create([FromBody]IssueDto dto, CancellationToken ct)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         var currentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-        var issueId = _service.Create(dto, currentUserId);
+        var issueId = _service.Create(dto, currentUserId, ct);
         
         // возвращаем на клиент
         return Ok(issueId);
+    }
+    
+    /// <summary>
+    /// Список пожеланий
+    /// </summary>
+    [HttpGet]
+    [Produces("application/json")]
+    public IActionResult GetList(CancellationToken ct)
+    {
+        var res = _service.GetList(ct);
+        return Ok(res);
     }
     
     /// <summary>
