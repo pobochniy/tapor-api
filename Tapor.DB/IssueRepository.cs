@@ -2,9 +2,11 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using MySqlConnector;
-using Tapor.Shared;
 using Tapor.Shared.Dtos;
+using Tapor.Shared.Interfaces;
+using Tapor.Shared.Options;
 
 namespace Tapor.DB;
 
@@ -14,9 +16,9 @@ public class IssueRepository : IIssueRepository
     private readonly string _connectionString;
     private readonly int _commandTimeout = TimeSpan.FromSeconds(5).Seconds;
 
-    public IssueRepository(IConfiguration config, ILogger<IssueRepository> logger)
+    public IssueRepository(IOptions<ConnectionStringOptions> config, ILogger<IssueRepository> logger)
     {
-        _connectionString = config.GetConnectionString("AppConnection")!;
+        _connectionString = config.Value.AppConnection;
         _logger = logger;
     }
 

@@ -46,7 +46,9 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
     
-builder.Services.AddServices();
+builder.Services
+    .AddOptions(builder.Configuration)
+    .AddServices();
 
 var app = builder.Build();
 

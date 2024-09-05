@@ -1,8 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using Tapor.Shared.Dtos;
+using Tapor.Shared.Options;
 
 namespace Tapor.DB.Tests;
 
@@ -26,7 +28,7 @@ public class IssueRepositoryTests
             EstimatedTime = 4.3m,
             DueDate = DateTime.Now.AddDays(2)
         };
-        var repo = new IssueRepository(GetAppConnection(), logger);
+        var repo = new IssueRepository(GetConnStringOptions(), logger);
 
         // Act
         var issueId = await repo.Create(dto, default);
@@ -40,7 +42,7 @@ public class IssueRepositoryTests
     {
         // Arrange
         var logger = Mock.Of<ILogger<IssueRepository>>();
-        var repo = new IssueRepository(GetAppConnection(), logger);
+        var repo = new IssueRepository(GetConnStringOptions(), logger);
 
         // Act
         var res = repo.GetList(default).ToBlockingEnumerable();
@@ -49,18 +51,26 @@ public class IssueRepositoryTests
         Assert.That(res.Count(), Is.GreaterThan(0));
     }
 
-    private IConfiguration GetAppConnection()
+    private IOptions<ConnectionStringOptions> GetConnStringOptions()
     {
-        var connStrings = new Dictionary<string, string>
+        return Options.Create(new ConnectionStringOptions
         {
-            {"ConnectionStrings:AppConnection", "server=localhost;port=3309;database=tapordb;user=root;password=1234"}
-        };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(connStrings!)
-            .Build();
-
-        return configuration;
+            AppConnection = "server=localhost;port=3309;database=tapordb;user=root;password=1234"
+        });
     }
+
+    // private IConfiguration GetAppConnection()
+    // {
+    //     var connStrings = new Dictionary<string, string>
+    //     {
+    //         {"ConnectionStrings:AppConnection", "server=localhost;port=3309;database=tapordb;user=root;password=1234"}
+    //     };
+    //     var configuration = new ConfigurationBuilder()
+    //         .AddInMemoryCollection(connStrings!)
+    //         .Build();
+    //
+    //     return configuration;
+    // }
     
     
     

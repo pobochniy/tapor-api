@@ -1,6 +1,7 @@
 using Tapor.DB;
 using Tapor.Services;
 using Tapor.Shared;
+using Tapor.Shared.Interfaces;
 
 namespace Tapor.Api.Configuration;
 

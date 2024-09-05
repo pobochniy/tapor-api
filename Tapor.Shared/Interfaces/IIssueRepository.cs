@@ -1,6 +1,6 @@
 using Tapor.Shared.Dtos;
 
-namespace Tapor.Shared;
+namespace Tapor.Shared.Interfaces;
 
 public interface IIssueRepository
 {

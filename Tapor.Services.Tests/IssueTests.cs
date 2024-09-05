@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using Tapor.DB;
 using Tapor.Shared;
 using Tapor.Shared.Dtos;
+using Tapor.Shared.Interfaces;
 
 namespace Tapor.Services.Tests;
 
