@@ -26,17 +26,28 @@ public class IssueRepository : IIssueRepository
     {
         // создаем подключение к базе
         await using var connection = new MySqlConnection(_connectionString);
-        await connection.OpenAsync(ct).ConfigureAwait(false);
+        await connection.OpenAsync(ct);
 
         await using var command = connection.CreateCommand();
         command.CommandTimeout = _commandTimeout;
 
         // формируем запрос
         command.CommandText =
-            $@"insert into Issue (`Assignee`, Reporter, Summary, Description, Type, Status, Priority, Size, EstimatedTime, CreateDate, DueDate)
-                    values ('{dto.Assignee}', '{dto.Reporter}', '{dto.Summary}', '{dto.Description}', {dto.Type}, {dto.Status}, {dto.Priority}, {dto.Size}, {dto.EstimatedTime.ToString().Replace(",", ".")}, '{ToDbDate(DateTime.Now)}', '{ToDbDate(dto.DueDate)}');
+            @"insert into Issue (`Assignee`, Reporter, Summary, Description, Type, Status, Priority, Size, EstimatedTime, CreateDate, DueDate)
+                    values (@assignee, @reporter, @summary, @description, @type, @status, @priority, @size, @estimatedTime, @createDate, @dueDate);
                 select LAST_INSERT_ID();
             ";
+        command.Parameters.AddWithValue("assignee", dto.Assignee);
+        command.Parameters.Add(new MySqlParameter("reporter", MySqlDbType.String) {Value = dto.Reporter});
+        command.Parameters.Add(new MySqlParameter("summary", MySqlDbType.String) {Value = dto.Summary});
+        command.Parameters.Add(new MySqlParameter("description", MySqlDbType.String) {Value = dto.Description});
+        command.Parameters.AddWithValue("type", dto.Type);
+        command.Parameters.Add(new MySqlParameter("status", MySqlDbType.Int32) {Value = dto.Status});
+        command.Parameters.Add(new MySqlParameter("priority", MySqlDbType.Int32) {Value = dto.Priority});
+        command.Parameters.Add(new MySqlParameter("size", MySqlDbType.Int32) {Value = dto.Size});
+        command.Parameters.Add(new MySqlParameter("estimatedTime", MySqlDbType.Decimal) {Value = dto.EstimatedTime});
+        command.Parameters.AddWithValue("createDate", DateTime.UtcNow);
+        command.Parameters.Add(new MySqlParameter("dueDate", MySqlDbType.DateTime) {Value = dto.DueDate});
 
         // сохраняем в базу, получаем айди созданной записи
         var issueObj = await command.ExecuteScalarAsync(ct);
