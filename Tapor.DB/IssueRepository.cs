@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MySqlConnector;
+using Tapor.DB.Scripts.Issue;
 using Tapor.Shared.Dtos;
 using Tapor.Shared.Interfaces;
 using Tapor.Shared.Options;
@@ -32,25 +33,14 @@ public class IssueRepository : IIssueRepository
         command.CommandTimeout = _commandTimeout;
 
         // формируем запрос
-        command.CommandText =
-            @"insert into Issue (`Assignee`, Reporter, Summary, Description, Type, Status, Priority, Size, EstimatedTime, CreateDate, DueDate)
-                    values (@assignee, @reporter, @summary, @description, @type, @status, @priority, @size, @estimatedTime, @createDate, @dueDate);
-                select LAST_INSERT_ID();
-            ";
-        command.Parameters.AddWithValue("assignee", dto.Assignee);
-        command.Parameters.Add(new MySqlParameter("reporter", MySqlDbType.String) {Value = dto.Reporter});
-        command.Parameters.Add(new MySqlParameter("summary", MySqlDbType.String) {Value = dto.Summary});
-        command.Parameters.Add(new MySqlParameter("description", MySqlDbType.String) {Value = dto.Description});
-        command.Parameters.AddWithValue("type", dto.Type);
-        command.Parameters.Add(new MySqlParameter("status", MySqlDbType.Int32) {Value = dto.Status});
-        command.Parameters.Add(new MySqlParameter("priority", MySqlDbType.Int32) {Value = dto.Priority});
-        command.Parameters.Add(new MySqlParameter("size", MySqlDbType.Int32) {Value = dto.Size});
-        command.Parameters.Add(new MySqlParameter("estimatedTime", MySqlDbType.Decimal) {Value = dto.EstimatedTime});
-        command.Parameters.AddWithValue("createDate", DateTime.UtcNow);
-        command.Parameters.Add(new MySqlParameter("dueDate", MySqlDbType.DateTime) {Value = dto.DueDate});
+        command.CommandText = Sql.IssueCreate;
+        // command.CommandType = CommandType.Text;
+        AddParameters(command, dto);
+        // command.Transaction = await connection.BeginTransactionAsync(IsolationLevel.ReadUncommitted, ct);
 
         // сохраняем в базу, получаем айди созданной записи
         var issueObj = await command.ExecuteScalarAsync(ct);
+        // await command.Transaction.CommitAsync(ct);
         var issueId = long.Parse(issueObj.ToString());
 
         // добавить в логгер запись
@@ -63,7 +53,7 @@ public class IssueRepository : IIssueRepository
     {
         // создаем подключение к базе
         await using var connection = new MySqlConnection(_connectionString);
-        await connection.OpenAsync(ct).ConfigureAwait(false);
+        await connection.OpenAsync(ct);
 
         await using var command = connection.CreateCommand();
         command.CommandTimeout = _commandTimeout;
@@ -72,8 +62,8 @@ public class IssueRepository : IIssueRepository
         command.CommandText = "select * from Issue;";
 
         // получаем записи в ридер
-        await using var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false);
-        while (await reader.ReadAsync(ct).ConfigureAwait(false))
+        await using var reader = await command.ExecuteReaderAsync(ct);
+        while (await reader.ReadAsync(ct))
         {
             yield return new IssueDto
             {
@@ -94,8 +84,18 @@ public class IssueRepository : IIssueRepository
         }
     }
 
-    private string ToDbDate(DateTime? dateTime)
+    private static void AddParameters(MySqlCommand command, IssueDto dto)
     {
-        return dateTime?.ToString("yyyy-MM-dd HH:mm:ss");
+        command.Parameters.AddWithValue("assignee", dto.Assignee);
+        command.Parameters.AddWithValue("reporter", dto.Reporter);
+        command.Parameters.AddWithValue("summary", dto.Summary);
+        command.Parameters.AddWithValue("description", dto.Description);
+        command.Parameters.AddWithValue("type", dto.Type);
+        command.Parameters.AddWithValue("status", dto.Status);
+        command.Parameters.AddWithValue("priority", dto.Priority);
+        command.Parameters.AddWithValue("size", dto.Size);
+        command.Parameters.AddWithValue("estimatedTime", dto.EstimatedTime);
+        command.Parameters.AddWithValue("createDate", DateTime.UtcNow);
+        command.Parameters.AddWithValue("dueDate", dto.DueDate);
     }
 }

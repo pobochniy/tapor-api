@@ -2,7 +2,7 @@ namespace Tapor.DB.Scripts.Issue;
 
 public static partial class Sql
 {
-    public static string IssueCreate() =>
+    public static string IssueCreate =>
         @"insert into Issue (
                    `Assignee`, 
                    Reporter, 
