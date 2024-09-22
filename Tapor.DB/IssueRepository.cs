@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MySqlConnector;
+using Tapor.DB.Mappers;
 using Tapor.DB.Scripts.Issue;
 using Tapor.Shared.Dtos;
 using Tapor.Shared.Interfaces;
@@ -65,27 +66,31 @@ public class IssueRepository : IIssueRepository
         await using var reader = await command.ExecuteReaderAsync(ct);
         while (await reader.ReadAsync(ct))
         {
-            yield return new IssueDto
-            {
-                Id = reader.GetInt64("Id"),
-                Assignee = !await reader.IsDBNullAsync("Assignee", ct) ? reader.GetGuid("Assignee") : null,
-                Reporter = !await reader.IsDBNullAsync("Reporter", ct) ? reader.GetGuid("Reporter") : null,
-                Summary = reader.GetString("Summary"),
-                Description = reader.GetString("Description"),
-                Type = reader.GetInt32("Type"),
-                Status = reader.GetInt32("Status"),
-                Priority = reader.GetInt32("Priority"),
-                Size = reader.GetInt32("Size"),
-                EstimatedTime = !await reader.IsDBNullAsync("EstimatedTime", ct)
-                    ? reader.GetDecimal("EstimatedTime")
-                    : null,
-                DueDate = !await reader.IsDBNullAsync("DueDate", ct) ? reader.GetDateTime("DueDate") : null,
-            };
+            yield return await reader.IssueToDto(ct);
         }
     }
 
     private static void AddParameters(MySqlCommand command, IssueDto dto)
     {
+        command.Parameters.AddWithValue("assignee", dto.Assignee);
+        command.Parameters.AddWithValue("reporter", dto.Reporter);
+        command.Parameters.AddWithValue("summary", dto.Summary);
+        command.Parameters.AddWithValue("description", dto.Description);
+        command.Parameters.AddWithValue("type", dto.Type);
+        command.Parameters.AddWithValue("status", dto.Status);
+        command.Parameters.AddWithValue("priority", dto.Priority);
+        command.Parameters.AddWithValue("size", dto.Size);
+        command.Parameters.AddWithValue("estimatedTime", dto.EstimatedTime);
+        command.Parameters.AddWithValue("createDate", DateTime.UtcNow);
+        command.Parameters.AddWithValue("dueDate", dto.DueDate);
+    }
+}
+
+public static partial class CommandExtensions
+{
+    public static void AddIssueParameters(this MySqlCommand command, IssueDto dto)
+    {
+        command.Parameters.Clear();
         command.Parameters.AddWithValue("assignee", dto.Assignee);
         command.Parameters.AddWithValue("reporter", dto.Reporter);
         command.Parameters.AddWithValue("summary", dto.Summary);

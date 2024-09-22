@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
+using Tapor.DB.Session;
 using Tapor.Shared.Dtos;
 using Tapor.Shared.Options;
 
@@ -28,7 +29,7 @@ public class IssueRepositoryTests
             EstimatedTime = 4.3m,
             DueDate = DateTime.Now.AddDays(2)
         };
-        var repo = new IssueRepository(GetConnStringOptions(), logger);
+        var repo = new IssueSessionRepository(logger, new DbSessionFactory(GetConnStringOptions()));
 
         // Act
         var issueId = await repo.Create(dto, default);
@@ -42,7 +43,7 @@ public class IssueRepositoryTests
     {
         // Arrange
         var logger = Mock.Of<ILogger<IssueRepository>>();
-        var repo = new IssueRepository(GetConnStringOptions(), logger);
+        var repo = new IssueSessionRepository(logger, new DbSessionFactory(GetConnStringOptions()));
 
         // Act
         var res = repo.GetList(default).ToBlockingEnumerable();

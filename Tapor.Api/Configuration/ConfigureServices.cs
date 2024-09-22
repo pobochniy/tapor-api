@@ -1,4 +1,6 @@
+using Dodo.Data.Factories;
 using Tapor.DB;
+using Tapor.DB.Session;
 using Tapor.Services;
 using Tapor.Shared;
 using Tapor.Shared.Interfaces;
@@ -14,7 +16,8 @@ public static class ConfigureServices
             .AddSingleton<IssueService>()
             .AddSingleton<IIssueRepository, IssueRepository>()
             .AddSingleton<NotificationService>()
-            .AddSingleton<NotificationsRepository>();
+            .AddSingleton<NotificationsRepository>()
+            .AddSingleton<IDbSessionFactory>();
 
         return serviceCollection;
     }
