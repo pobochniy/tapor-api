@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tapor.Services.Tests", "Tap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tapor.DB.Tests", "Tapor.DB.Tests\Tapor.DB.Tests.csproj", "{D2A446A8-45B6-49B9-919D-0FD846EAC211}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tapor.Migrator", "Tapor.Migrator\Tapor.Migrator.csproj", "{1F6133C7-3012-43E9-ABFC-BD8048366B48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{D2A446A8-45B6-49B9-919D-0FD846EAC211}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2A446A8-45B6-49B9-919D-0FD846EAC211}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2A446A8-45B6-49B9-919D-0FD846EAC211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F6133C7-3012-43E9-ABFC-BD8048366B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F6133C7-3012-43E9-ABFC-BD8048366B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F6133C7-3012-43E9-ABFC-BD8048366B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F6133C7-3012-43E9-ABFC-BD8048366B48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
