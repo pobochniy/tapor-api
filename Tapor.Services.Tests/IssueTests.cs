@@ -45,6 +45,11 @@ public class Tests
             }
         }
 
+        public Task<IssueDto?> Details(long id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IssueDto GetIssue(long id)
         {
             return _repo.Single(x => x.Id == id);
