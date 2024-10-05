@@ -1,0 +1,11 @@
+средства - диспетчер пакетов NuGet - консоль
+
+(из корня)
+dotnet ef migrations add Init --startup-project Tapor.Api --project Tapor.DB 
+
+(из корня)
+dotnet ef database update --startup-project Tapor.Api --project Tapor.DB  
+
+remove-migration
+
+script-migration

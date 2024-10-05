@@ -13,11 +13,11 @@ public static class ConfigureServices
     {
         serviceCollection
             .AddSingleton<AuthService>()
-            .AddSingleton<IssueService>()
-            .AddSingleton<IIssueRepository, IssueRepository>()
+            .AddTransient<IssueService>()
+            .AddTransient<IIssueRepository, IssueEntityRepository>()
             .AddSingleton<NotificationService>()
             .AddSingleton<NotificationsRepository>()
-            .AddSingleton<IDbSessionFactory>();
+            .AddSingleton<IDbSessionFactory, DbSessionFactory>();
 
         return serviceCollection;
     }

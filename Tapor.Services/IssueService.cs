@@ -40,21 +40,9 @@ public class IssueService
         return _repository.GetList(ct);
     }
 
-    public IssueDto? Details(long id)
+    public async Task<IssueDto?> Details(long id)
     {
-        if (id != 5) return null;
-        
-        var res = new IssueDto
-        {
-            Id = 5,
-            Reporter = Guid.Empty,
-            Status = 1,
-            Summary = "Почистить кофе машину",
-            Description = "Очень нужная и серьезная задача, необходимо почистить кофе машину",
-            DueDate = DateTime.Now,
-            EstimatedTime = 1.5m
-        };
-        
+        var res = await _repository.Details(id);
         return res;
     }
 }

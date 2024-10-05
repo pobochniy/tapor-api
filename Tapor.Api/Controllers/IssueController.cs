@@ -11,7 +11,6 @@ namespace Tapor.Api.Controllers;
 /// Хотелки
 /// </summary>
 [Route("api/[controller]/[action]")]
-[ApiController]
 public class IssueController: ControllerBase
 {
     private readonly IssueService _service;
@@ -28,12 +27,12 @@ public class IssueController: ControllerBase
     /// <returns>идентификатор созданного пожелания</returns>
     [HttpPost]
     [Authorize]
-    public IActionResult Create([FromBody]IssueDto dto, CancellationToken ct)
+    public async Task<IActionResult> Create([FromBody]IssueDto dto, CancellationToken ct)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (!ModelState.IsValid) return UnprocessableEntity(ModelState);
 
         var currentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-        var issueId = _service.Create(dto, currentUserId, ct);
+        var issueId = await _service.Create(dto, currentUserId, ct);
         
         // возвращаем на клиент
         return Ok(issueId);
@@ -58,9 +57,9 @@ public class IssueController: ControllerBase
     /// <response code="404">ишшью не найдено</response>
     [HttpGet]
     [Produces("application/json")]
-    public IActionResult Details([FromQuery]long id)
+    public async Task<IActionResult> Details([FromQuery]long id)
     {
-        var res = _service.Details(id);
+        var res = await _service.Details(id);
         if (res == null) return NotFound();
         
         return Ok(res);

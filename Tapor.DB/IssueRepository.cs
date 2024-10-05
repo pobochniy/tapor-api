@@ -70,6 +70,11 @@ public class IssueRepository : IIssueRepository
         }
     }
 
+    public Task<IssueDto?> Details(long id)
+    {
+        throw new NotImplementedException();
+    }
+
     private static void AddParameters(MySqlCommand command, IssueDto dto)
     {
         command.Parameters.AddWithValue("assignee", dto.Assignee);

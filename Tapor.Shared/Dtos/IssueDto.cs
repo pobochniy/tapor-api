@@ -20,18 +20,18 @@ public class IssueDto
     /// <summary>
     /// Инициатор
     /// </summary>
-    [Required]
     public Guid? Reporter { get; set; }
     
     /// <summary>
     /// Сводка
     /// </summary>
+    [Required]
     public string Summary { get; set; }
     
     /// <summary>
     /// Описание
     /// </summary>
-    public string Description { get; set; }
+    public string? Description { get; set; }
     
     /// <summary>
     /// Тип

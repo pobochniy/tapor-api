@@ -8,5 +8,6 @@
   &lt;TestAncestor&gt;
     &lt;TestId&gt;NUnit3x::D2A446A8-45B6-49B9-919D-0FD846EAC211::net8.0::Tapor.DB.Tests.IssueRepositoryTests.CanInsert&lt;/TestId&gt;
     &lt;TestId&gt;NUnit3x::D2A446A8-45B6-49B9-919D-0FD846EAC211::net8.0::Tapor.DB.Tests.IssueRepositoryTests.CanGetList&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::0E44187E-E81A-4C7E-951A-805877BF58E1::net8.0::Tapor.Api.IntegrationTests.Controllers.Issue&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

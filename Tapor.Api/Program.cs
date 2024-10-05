@@ -48,6 +48,7 @@ builder.Services.AddSwaggerGen(options =>
     
 builder.Services
     .AddOptions(builder.Configuration)
+    .AddApplicationContext(builder.Configuration)
     .AddServices();
 
 var app = builder.Build();
@@ -67,3 +68,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program
+{
+    /* Expose the Program class for use with WebApplicationFactory<T> */
+}

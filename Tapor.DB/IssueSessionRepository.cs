@@ -57,6 +57,11 @@ public class IssueSessionRepository : IIssueRepository
             yield return issue;
         }
     }
+
+    public Task<IssueDto?> Details(long id)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 

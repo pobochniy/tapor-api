@@ -1,8 +1,10 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
+using Tapor.DB.Entity;
 using Tapor.DB.Session;
 using Tapor.Shared.Dtos;
 using Tapor.Shared.Options;
@@ -29,7 +31,11 @@ public class IssueRepositoryTests
             EstimatedTime = 4.3m,
             DueDate = DateTime.Now.AddDays(2)
         };
-        var repo = new IssueSessionRepository(logger, new DbSessionFactory(GetConnStringOptions()));
+        
+        var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));
+        var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+        optionsBuilder.UseMySql(ConnString, serverVersion);
+        var repo = new IssueEntityRepository(new ApplicationContext(optionsBuilder.Options));
 
         // Act
         var issueId = await repo.Create(dto, default);
@@ -52,11 +58,12 @@ public class IssueRepositoryTests
         Assert.That(res.Count(), Is.GreaterThan(0));
     }
 
+    private const string ConnString = "server=localhost;port=3309;database=tapordb;user=root;password=1234";
     private IOptions<ConnectionStringOptions> GetConnStringOptions()
     {
         return Options.Create(new ConnectionStringOptions
         {
-            AppConnection = "server=localhost;port=3309;database=tapordb;user=root;password=1234"
+            AppConnection = ConnString
         });
     }
 
