@@ -9,3 +9,5 @@ dotnet ef database update --startup-project Tapor.Api --project Tapor.DB
 remove-migration
 
 script-migration
+
+dotnet ef dbcontext scaffold "server=localhost;port=3309;database=tapordb;user=root;password=1234" Pomelo.EntityFrameworkCore.MySql --context ApplicationContext --startup-project Tapor.Api --project Tapor.DB --output-dir Entity --force
